@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.content-container {
+    display: flex;
+}
+
+.input-container,
+.display-container {
+    height: 100vh;
+    width: 50%;
+    border: 1px solid black;
+}
