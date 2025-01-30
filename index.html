@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Odin Project - Project:Library</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
 </head>
 <body>
     <div class="content-container">
@@ -18,13 +17,14 @@
                 <label for="pages">Number of pages:</label>
                 <input type="text" id="pages" name="pages">
                 <label for="read">Read?</label>
-                <label for="read-yes">Yes</label><input type="radio" id="read" name="read-yes">
-                <label for="read-no">No</label><input type="radio" id="read" name="read-no">
+                <label for="read">Yes</label><input type="radio" id="read" name="read" value="yes">
+                <label for="read">No</label><input type="radio" id="read" name="read" value="no">
             </form>
             <button id="inputButton">Add to library</button>
         </div>
         <div class="display-container">
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
