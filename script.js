@@ -19,20 +19,30 @@ function getInputValues () {
 inputButton.addEventListener("click", addBookToLibrary);
 
 function addBookToLibrary() {
-    
     const { inputTitle, inputAuthor, inputPages, inputRead} = getInputValues();
-
     const newBook = new Book(inputTitle, inputAuthor, inputPages, inputRead);
     myLibrary.push(newBook);
     displayBooks();
 }
 
 function displayBooks() {
-    
     const { inputTitle, inputAuthor, inputPages, inputRead} = getInputValues();
-
     const displayContainer = document.getElementById('display-container');
+    const bookDisplay = document.createElement('div');
     const titleDiv = document.createElement('div');
-    titleDiv.textContent += inputTitle;
-    displayContainer.appendChild(titleDiv);
+    titleDiv.textContent = `Title: ${inputTitle}`;
+    displayContainer.appendChild(bookDisplay);
+    bookDisplay.appendChild(titleDiv);
+
+    const authorDiv = document.createElement('div');
+    authorDiv.textContent = `Author: ${inputAuthor}`;
+    bookDisplay.appendChild(authorDiv);
+
+    const pagesDiv = document.createElement('div');
+    pagesDiv.textContent = `Number of pages: ${inputPages}`;
+    bookDisplay.appendChild(pagesDiv);
+
+    const readDiv = document.createElement('div');
+    readDiv.textContent = `Have you read this book? ${inputRead}`;
+    bookDisplay.appendChild(readDiv);
 }
