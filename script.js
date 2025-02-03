@@ -31,7 +31,7 @@ function displayBooks() {
     const { inputTitle, inputAuthor, inputPages, inputRead, inputArrayPos} = getInputValues();
     const displayContainer = document.getElementById('display-container');
     const bookDisplay = document.createElement('div');
-    bookDisplay.id = `bookDisplay[${inputArrayPos}]`;
+    bookDisplay.id = `bookDisplay-${inputArrayPos}`;
     const titleDiv = document.createElement('div');
     titleDiv.textContent = `Title: ${inputTitle}`;
     displayContainer.appendChild(bookDisplay);
@@ -58,7 +58,6 @@ function displayBooks() {
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Click here to delete';
     deleteButton.id = `deleteButton-${inputArrayPos}`;
-    // deleteButton.className = 'deleteButton';
     bookDisplay.appendChild(deleteButton);
     deleteButton.addEventListener('click', function(e) {
         const target = e.target.closest(`#deleteButton-${inputArrayPos}`);
@@ -69,5 +68,8 @@ function displayBooks() {
 }
 
 function deleteBook(inputArrayPos) {
-    console.log(`testing, button[${inputArrayPos}]`);
+    const displayContainer = document.getElementById('display-container');
+    const nodeToDelete = document.getElementById(`bookDisplay-${inputArrayPos}`);
+    displayContainer.removeChild(nodeToDelete);
+    myLibrary.splice(inputArrayPos, 1);
 }
