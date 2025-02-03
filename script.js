@@ -1,5 +1,6 @@
 const myLibrary = [];
 const inputButton = document.getElementById('inputButton');
+// const deleteButton = document.getElementsByClassName('deleteButton');
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -17,7 +18,7 @@ function getInputValues () {
     return { inputTitle, inputAuthor, inputPages, inputRead, inputArrayPos};
 }
 
-inputButton.addEventListener("click", addBookToLibrary);
+inputButton.addEventListener('click', addBookToLibrary);
 
 function addBookToLibrary() {
     const { inputTitle, inputAuthor, inputPages, inputRead, inputArrayPos} = getInputValues();
@@ -30,6 +31,7 @@ function displayBooks() {
     const { inputTitle, inputAuthor, inputPages, inputRead, inputArrayPos} = getInputValues();
     const displayContainer = document.getElementById('display-container');
     const bookDisplay = document.createElement('div');
+    bookDisplay.id = `bookDisplay[${inputArrayPos}]`;
     const titleDiv = document.createElement('div');
     titleDiv.textContent = `Title: ${inputTitle}`;
     displayContainer.appendChild(bookDisplay);
@@ -47,12 +49,25 @@ function displayBooks() {
     readDiv.textContent = `Have you read this book? ${inputRead}`;
     bookDisplay.appendChild(readDiv);
 
-    // code to be deleted - for testing
+    // code below to be deleted - for testing
     const arrayPosDiv = document.createElement('div');
     arrayPosDiv.textContent = `Index: ${inputArrayPos}`;
     bookDisplay.appendChild(arrayPosDiv);
+    // code above to be delete - for testing
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Click here to delete';
+    deleteButton.id = `deleteButton-${inputArrayPos}`;
+    // deleteButton.className = 'deleteButton';
+    bookDisplay.appendChild(deleteButton);
+    deleteButton.addEventListener('click', function(e) {
+        const target = e.target.closest(`#deleteButton-${inputArrayPos}`);
+        if (target) {
+            deleteBook(inputArrayPos);
+        }
+    });
 }
 
-function deleteBook() {
-
+function deleteBook(inputArrayPos) {
+    console.log(`testing, button[${inputArrayPos}]`);
 }
