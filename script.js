@@ -1,6 +1,5 @@
 const myLibrary = [];
 const inputButton = document.getElementById('inputButton');
-// const deleteButton = document.getElementsByClassName('deleteButton');
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -47,13 +46,12 @@ function displayBooks() {
 
     const readDiv = document.createElement('div');
     readDiv.textContent = `Have you read this book? ${inputRead}`;
+    readDiv.id = `readDiv-${inputArrayPos}`;
     bookDisplay.appendChild(readDiv);
 
-    // code below to be deleted - for testing
-    const arrayPosDiv = document.createElement('div');
-    arrayPosDiv.textContent = `Index: ${inputArrayPos}`;
-    bookDisplay.appendChild(arrayPosDiv);
-    // code above to be delete - for testing
+    // const arrayPosDiv = document.createElement('div');
+    // arrayPosDiv.textContent = `Index: ${inputArrayPos}`;
+    // bookDisplay.appendChild(arrayPosDiv);
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Click here to delete';
@@ -65,6 +63,17 @@ function displayBooks() {
             deleteBook(inputArrayPos);
         }
     });
+
+    const readButton = document.createElement('button');
+    readButton.textContent = 'Click here to change read status';
+    readButton.id = `readButton-${inputArrayPos}`;
+    bookDisplay.appendChild(readButton);
+    readButton.addEventListener('click', function(e) {
+        const target = e.target.closest(`#readButton-${inputArrayPos}`);
+        if (target) {
+            readStatus(inputArrayPos);
+        }
+    });
 }
 
 function deleteBook(inputArrayPos) {
@@ -72,4 +81,11 @@ function deleteBook(inputArrayPos) {
     const nodeToDelete = document.getElementById(`bookDisplay-${inputArrayPos}`);
     displayContainer.removeChild(nodeToDelete);
     myLibrary.splice(inputArrayPos, 1);
+}
+
+function readStatus(inputArrayPos) {
+    const nodeToChange = document.getElementById(`readDiv-${inputArrayPos}`);
+    nodeToChange.textContent = nodeToChange.textContent === 'Have you read this book? yes'
+    ? 'Have you read this book? no'
+    : 'Have you read this book? yes';
 }
