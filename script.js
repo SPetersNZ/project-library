@@ -13,23 +13,24 @@ function getInputValues () {
     const inputAuthor = document.getElementById('author').value;
     const inputPages = document.getElementById('pages').value;
     const inputRead = document.querySelector('input[name="read"]:checked').value;
-    inputArrayPos = myLibrary.length - 1;
-    return { inputTitle, inputAuthor, inputPages, inputRead, inputArrayPos};
+    tableRowNum = myLibrary.length - 1;
+    return { inputTitle, inputAuthor, inputPages, inputRead, tableRowNum};
 }
 
 inputButton.addEventListener('click', addBookToLibrary);
 
 function addBookToLibrary() {
-    const { inputTitle, inputAuthor, inputPages, inputRead, inputArrayPos} = getInputValues();
-    const newBook = new Book(inputTitle, inputAuthor, inputPages, inputRead, inputArrayPos);
+    const { inputTitle, inputAuthor, inputPages, inputRead, tableRowNum} = getInputValues();
+    const newBook = new Book(inputTitle, inputAuthor, inputPages, inputRead, tableRowNum);
     myLibrary.push(newBook);
     displayBooks();
 }
 
 function displayBooks() {
-    const { inputTitle, inputAuthor, inputPages, inputRead, inputArrayPos} = getInputValues();
+    const { inputTitle, inputAuthor, inputPages, inputRead, tableRowNum} = getInputValues();
     const displayTable = document.getElementById('display-table');
-    const newRow = displayTable.insertRow(inputArrayPos + 1);
+    const newRow = displayTable.insertRow(tableRowNum + 1);
+    newRow.id = `tableRowNum-${tableRowNum}`;
 
     const titleCell = newRow.insertCell(0);
     titleCell.textContent = `${inputTitle}`;
@@ -45,39 +46,43 @@ function displayBooks() {
 
     const readButton = document.createElement('button');
     readButton.textContent = 'Click here to change read status';
-    readButton.id = `readButton-${inputArrayPos}`;
+    readButton.id = `readButton-${tableRowNum}`;
     const readButtonCell = newRow.insertCell(4);
     readButtonCell.append(readButton);
     readButton.addEventListener('click', function(e) {
-        const target = e.target.closest(`#readButton-${inputArrayPos}`);
+        const target = e.target.closest(`#readButton-${tableRowNum}`);
         if (target) {
-            deleteBook(inputArrayPos);
+            deleteBook(tableRowNum);
         }
     });
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Click here to delete';
-    deleteButton.id = `deleteButton-${inputArrayPos}`;
+    deleteButton.id = `deleteButton-${tableRowNum}`;
     const deleteButtonCell = newRow.insertCell(5);
     deleteButtonCell.append(deleteButton);
     deleteButton.addEventListener('click', function(e) {
-    const target = e.target.closest(`#deleteButton-${inputArrayPos}`);
+    const target = e.target.closest(`#deleteButton-${tableRowNum}`);
     if (target) {
-            deleteBook(inputArrayPos);
+            deleteBook(tableRowNum);
         }
     });
 }
 
-function readStatus(inputArrayPos) {
-    const nodeToChange = document.getElementById(`readDiv-${inputArrayPos}`);
+function readStatus(tableRowNum) {
+    const nodeToChange = document.getElementById(`readDiv-${tableRowNum}`);
     nodeToChange.textContent = nodeToChange.textContent === 'Have you read this book? yes'
     ? 'Have you read this book? no'
     : 'Have you read this book? yes';
 }
 
-function deleteBook(inputArrayPos) {
-    const displayContainer = document.getElementById('display-container');
-    const nodeToDelete = document.getElementById(`bookDisplay-${inputArrayPos}`);
-    displayContainer.removeChild(nodeToDelete);
-    myLibrary.splice(inputArrayPos, 1);
+function deleteBook(tableRowNum) {
+    // const displayContainer = document.getElementById('display-container');
+    // const nodeToDelete = document.getElementById(`bookDisplay-${tableRowNum}`);
+    // displayContainer.removeChild(nodeToDelete);
+    // myLibrary.splice(tableRowNum, 1);
+
+    const displayTable = document.getElementById('display-table');
+    displayTable.deleteRow(tableRowNum + 1);
+    myLibrary.splice(tableRowNum, 1);
 }
