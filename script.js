@@ -28,59 +28,44 @@ function addBookToLibrary() {
 
 function displayBooks() {
     const { inputTitle, inputAuthor, inputPages, inputRead, inputArrayPos} = getInputValues();
-    const displayContainer = document.getElementById('display-container');
-    const bookDisplay = document.createElement('div');
-    bookDisplay.id = `bookDisplay-${inputArrayPos}`;
-    const titleDiv = document.createElement('div');
-    titleDiv.textContent = `Title: ${inputTitle}`;
-    displayContainer.appendChild(bookDisplay);
-    bookDisplay.appendChild(titleDiv);
+    const displayTable = document.getElementById('display-table');
+    const newRow = displayTable.insertRow(inputArrayPos + 1);
 
-    const authorDiv = document.createElement('div');
-    authorDiv.textContent = `Author: ${inputAuthor}`;
-    bookDisplay.appendChild(authorDiv);
+    const titleCell = newRow.insertCell(0);
+    titleCell.textContent = `${inputTitle}`;
 
-    const pagesDiv = document.createElement('div');
-    pagesDiv.textContent = `Number of pages: ${inputPages}`;
-    bookDisplay.appendChild(pagesDiv);
+    const authorCell = newRow.insertCell(1);
+    authorCell.textContent = `${inputAuthor}`;
 
-    const readDiv = document.createElement('div');
-    readDiv.textContent = `Have you read this book? ${inputRead}`;
-    readDiv.id = `readDiv-${inputArrayPos}`;
-    bookDisplay.appendChild(readDiv);
+    const pagesCell = newRow.insertCell(2);
+    pagesCell.textContent = `${inputPages}`;
 
-    // const arrayPosDiv = document.createElement('div');
-    // arrayPosDiv.textContent = `Index: ${inputArrayPos}`;
-    // bookDisplay.appendChild(arrayPosDiv);
+    const readCell = newRow.insertCell(3);
+    readCell.textContent = `${inputRead}`;
 
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Click here to delete';
-    deleteButton.id = `deleteButton-${inputArrayPos}`;
-    bookDisplay.appendChild(deleteButton);
-    deleteButton.addEventListener('click', function(e) {
-        const target = e.target.closest(`#deleteButton-${inputArrayPos}`);
+    const readButton = document.createElement('button');
+    readButton.textContent = 'Click here to change read status';
+    readButton.id = `readButton-${inputArrayPos}`;
+    const readButtonCell = newRow.insertCell(4);
+    readButtonCell.append(readButton);
+    readButton.addEventListener('click', function(e) {
+        const target = e.target.closest(`#readButton-${inputArrayPos}`);
         if (target) {
             deleteBook(inputArrayPos);
         }
     });
 
-    const readButton = document.createElement('button');
-    readButton.textContent = 'Click here to change read status';
-    readButton.id = `readButton-${inputArrayPos}`;
-    bookDisplay.appendChild(readButton);
-    readButton.addEventListener('click', function(e) {
-        const target = e.target.closest(`#readButton-${inputArrayPos}`);
-        if (target) {
-            readStatus(inputArrayPos);
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Click here to delete';
+    deleteButton.id = `deleteButton-${inputArrayPos}`;
+    const deleteButtonCell = newRow.insertCell(5);
+    deleteButtonCell.append(deleteButton);
+    deleteButton.addEventListener('click', function(e) {
+    const target = e.target.closest(`#deleteButton-${inputArrayPos}`);
+    if (target) {
+            deleteBook(inputArrayPos);
         }
     });
-}
-
-function deleteBook(inputArrayPos) {
-    const displayContainer = document.getElementById('display-container');
-    const nodeToDelete = document.getElementById(`bookDisplay-${inputArrayPos}`);
-    displayContainer.removeChild(nodeToDelete);
-    myLibrary.splice(inputArrayPos, 1);
 }
 
 function readStatus(inputArrayPos) {
@@ -88,4 +73,11 @@ function readStatus(inputArrayPos) {
     nodeToChange.textContent = nodeToChange.textContent === 'Have you read this book? yes'
     ? 'Have you read this book? no'
     : 'Have you read this book? yes';
+}
+
+function deleteBook(inputArrayPos) {
+    const displayContainer = document.getElementById('display-container');
+    const nodeToDelete = document.getElementById(`bookDisplay-${inputArrayPos}`);
+    displayContainer.removeChild(nodeToDelete);
+    myLibrary.splice(inputArrayPos, 1);
 }
