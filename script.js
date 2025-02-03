@@ -43,6 +43,7 @@ function displayBooks() {
 
     const readCell = newRow.insertCell(3);
     readCell.textContent = `${inputRead}`;
+    readCell.id = `readCell-${tableRowNum}`;
 
     const readButton = document.createElement('button');
     readButton.textContent = 'Click here to change read status';
@@ -52,7 +53,7 @@ function displayBooks() {
     readButton.addEventListener('click', function(e) {
         const target = e.target.closest(`#readButton-${tableRowNum}`);
         if (target) {
-            deleteBook(tableRowNum);
+            readStatus(tableRowNum);
         }
     });
 
@@ -70,10 +71,13 @@ function displayBooks() {
 }
 
 function readStatus(tableRowNum) {
-    const nodeToChange = document.getElementById(`readDiv-${tableRowNum}`);
-    nodeToChange.textContent = nodeToChange.textContent === 'Have you read this book? yes'
-    ? 'Have you read this book? no'
-    : 'Have you read this book? yes';
+    // const nodeToChange = document.getElementById(`readDiv-${tableRowNum}`);
+    // nodeToChange.textContent = nodeToChange.textContent === 'Have you read this book? yes'
+    // ? 'Have you read this book? no'
+    // : 'Have you read this book? yes';
+
+    const cellToChange = document.getElementById(`readCell-${tableRowNum}`);
+    cellToChange.textContent = cellToChange.textContent === 'yes' ? 'no' : 'yes';
 }
 
 function deleteBook(tableRowNum) {
