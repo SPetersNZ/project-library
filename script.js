@@ -18,6 +18,7 @@ function getInputValues () {
 
 inputButton.addEventListener('click', addBookToLibrary);
 
+// add a book to the myLibrary array
 function addBookToLibrary() {
     const { inputTitle, inputAuthor, inputPages, inputRead} = getInputValues();
     const newBook = new Book(inputTitle, inputAuthor, inputPages, inputRead);
@@ -25,6 +26,7 @@ function addBookToLibrary() {
     displayBooks();
 }
 
+// display a book when it gets added to the table
 function displayBooks() {
     let tableRowNum = myLibrary.length;
     const { inputTitle, inputAuthor, inputPages, inputRead} = getInputValues();
@@ -70,11 +72,13 @@ function displayBooks() {
     });
 }
 
+// change the read status of a book that has already been added
 function readStatus(tableRowNum) {
     const cellToChange = document.getElementById(`readCell-${tableRowNum}`);
     cellToChange.textContent = cellToChange.textContent === 'yes' ? 'no' : 'yes';
 }
 
+// delete a book from the table
 function deleteBook(tableRowNum) {
     const rowToDelete = document.getElementById(`tableRowNum-${tableRowNum}`);
     rowToDelete.parentNode.removeChild(rowToDelete);
@@ -83,35 +87,37 @@ function deleteBook(tableRowNum) {
     } else {
         myLibrary.splice(tableRowNum, 1);
     }
-    // renameRows();
+    renameRows();
 }
 
-// function renameRows () {
-//     const row = document.querySelectorAll('#display-table tr');
-//     const readCellIndex = 3;
-//     row.forEach((row, index) => {
-//         row.id = `tableRowNum-${index}`;
-//         row.cells[readCellIndex].id = `readCell-${index}`;
-//         const buttons = row.querySelectorAll('button');
-//         const readButton = Array.from(buttons).find(btn => btn.id.startsWith('readButton-'));
-//         if(readButton) {
-//             readButton.id = `readButton-${index}`;
-//             readButton.addEventListener('click', function(e) {
-//             const target = e.target.closest(`#readButton-${index}`);
-//                 if (target) {
-//                     readStatus(index);
-//                 }
-//             });
-//         }
-//         const deleteButton = Array.from(buttons).find(btn => btn.id.startsWith('deleteButton-'));
-//         if (deleteButton) {
-//             deleteButton.id = `deleteButton-${index}`;
-//             deleteButton.addEventListener('click', function(e) {
-//             const target = e.target.closest(`#deleteButton-${index}`);
-//                 if (target) {
-//                     deleteBook(index);
-//                 }
-//             });
-//         }
-//     });
-// }
+// function to ensure that the rows are named in their correct order
+// ensures that button functions will match to the correct rows
+function renameRows () {
+    const row = document.querySelectorAll('#display-table tr');
+    const readCellIndex = 3;
+    row.forEach((row, index) => {
+        row.id = `tableRowNum-${index}`;
+        row.cells[readCellIndex].id = `readCell-${index}`;
+        const buttons = row.querySelectorAll('button');
+        const readButton = Array.from(buttons).find(btn => btn.id.startsWith('readButton-'));
+        if(readButton) {
+            readButton.id = `readButton-${index}`;
+            readButton.addEventListener('click', function(e) {
+            const target = e.target.closest(`#readButton-${index}`);
+                if (target) {
+                    readStatus(index);
+                }
+            });
+        }
+        const deleteButton = Array.from(buttons).find(btn => btn.id.startsWith('deleteButton-'));
+        if (deleteButton) {
+            deleteButton.id = `deleteButton-${index}`;
+            deleteButton.addEventListener('click', function(e) {
+            const target = e.target.closest(`#deleteButton-${index}`);
+                if (target) {
+                    deleteBook(index);
+                }
+            });
+        }
+    });
+}
