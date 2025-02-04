@@ -13,23 +13,23 @@ function getInputValues () {
     const inputAuthor = document.getElementById('author').value;
     const inputPages = document.getElementById('pages').value;
     const inputRead = document.querySelector('input[name="read"]:checked').value;
-    tableRowNum = myLibrary.length - 1;
-    return { inputTitle, inputAuthor, inputPages, inputRead, tableRowNum};
+    return { inputTitle, inputAuthor, inputPages, inputRead};
 }
 
 inputButton.addEventListener('click', addBookToLibrary);
 
 function addBookToLibrary() {
-    const { inputTitle, inputAuthor, inputPages, inputRead, tableRowNum} = getInputValues();
-    const newBook = new Book(inputTitle, inputAuthor, inputPages, inputRead, tableRowNum);
+    const { inputTitle, inputAuthor, inputPages, inputRead} = getInputValues();
+    const newBook = new Book(inputTitle, inputAuthor, inputPages, inputRead);
     myLibrary.push(newBook);
     displayBooks();
 }
 
 function displayBooks() {
-    const { inputTitle, inputAuthor, inputPages, inputRead, tableRowNum} = getInputValues();
+    let tableRowNum = myLibrary.length;
+    const { inputTitle, inputAuthor, inputPages, inputRead} = getInputValues();
     const displayTable = document.getElementById('display-table');
-    const newRow = displayTable.insertRow(tableRowNum + 1);
+    const newRow = displayTable.insertRow(tableRowNum);
     newRow.id = `tableRowNum-${tableRowNum}`;
 
     const titleCell = newRow.insertCell(0);
@@ -78,5 +78,40 @@ function readStatus(tableRowNum) {
 function deleteBook(tableRowNum) {
     const rowToDelete = document.getElementById(`tableRowNum-${tableRowNum}`);
     rowToDelete.parentNode.removeChild(rowToDelete);
-    myLibrary.splice(tableRowNum, 1);
+    if (tableRowNum == myLibrary.length) {
+        myLibrary.pop();
+    } else {
+        myLibrary.splice(tableRowNum, 1);
+    }
+    // renameRows();
 }
+
+// function renameRows () {
+//     const row = document.querySelectorAll('#display-table tr');
+//     const readCellIndex = 3;
+//     row.forEach((row, index) => {
+//         row.id = `tableRowNum-${index}`;
+//         row.cells[readCellIndex].id = `readCell-${index}`;
+//         const buttons = row.querySelectorAll('button');
+//         const readButton = Array.from(buttons).find(btn => btn.id.startsWith('readButton-'));
+//         if(readButton) {
+//             readButton.id = `readButton-${index}`;
+//             readButton.addEventListener('click', function(e) {
+//             const target = e.target.closest(`#readButton-${index}`);
+//                 if (target) {
+//                     readStatus(index);
+//                 }
+//             });
+//         }
+//         const deleteButton = Array.from(buttons).find(btn => btn.id.startsWith('deleteButton-'));
+//         if (deleteButton) {
+//             deleteButton.id = `deleteButton-${index}`;
+//             deleteButton.addEventListener('click', function(e) {
+//             const target = e.target.closest(`#deleteButton-${index}`);
+//                 if (target) {
+//                     deleteBook(index);
+//                 }
+//             });
+//         }
+//     });
+// }
