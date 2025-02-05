@@ -5,11 +5,16 @@
 
 .content-container {
     display: flex;
+    height: 100vh;
+    width: 100vw;
 }
 
-.input-container,
-.display-container {
-    height: 100vh;
-    width: 50%;
+#input-container {
+    width: 20%;
+    border: 1px solid black;
+}
+
+#display-container {
+    width: auto;
     border: 1px solid black;
 }
