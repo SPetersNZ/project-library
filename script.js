@@ -90,8 +90,6 @@ function renameRows() {
         const readButton = Array.from(buttons).find(btn => btn.id.startsWith('readButton-'));
         if (readButton) {
             readButton.id = `readButton-${index}`;
-            // readButton.removeEventListener('click', () => readStatus);
-            // readButton.addEventListener('click', () => readStatus(index));
             readButton.replaceWith(readButton.cloneNode(true));
             const newReadButton = document.getElementById(`readButton-${index}`);
             newReadButton.addEventListener('click', () => readStatus(index));
@@ -100,8 +98,6 @@ function renameRows() {
         const deleteButton = Array.from(buttons).find(btn => btn.id.startsWith('deleteButton-'));
         if (deleteButton) {
             deleteButton.id = `deleteButton-${index}`;
-            // deleteButton.removeEventListener('click', () => deleteBook);
-            // deleteButton.addEventListener('click', () => deleteBook(row));
             deleteButton.replaceWith(deleteButton.cloneNode(true));
             const newDeleteButton = document.getElementById(`deleteButton-${index}`);
             newDeleteButton.addEventListener('click', () => deleteBook(row));
